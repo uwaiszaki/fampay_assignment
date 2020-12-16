@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.signals import post_save
 
 
 class Keyword(models.Model):
@@ -8,6 +9,12 @@ class Keyword(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def save_keyword(sender, instance, **kwargs):
+    print("Received the signal")
+
+post_save.connect(save_keyword, sender=Keyword)
 
 
 class Video(models.Model):
